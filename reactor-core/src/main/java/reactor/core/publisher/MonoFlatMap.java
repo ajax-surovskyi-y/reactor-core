@@ -22,6 +22,7 @@ import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
+import org.reactivestreams.Publisher;
 import org.reactivestreams.Subscription;
 import reactor.core.CoreSubscriber;
 import reactor.core.Fuseable;
@@ -154,7 +155,7 @@ final class MonoFlatMap<T, R> extends InternalMonoOperator<T, R> implements Fuse
 			}
 
 			try {
-				m.subscribe(second);
+				((Publisher<? extends R>) m).subscribe(second);
 			}
 			catch (Throwable e) {
 				actual.onError(Operators.onOperatorError(this, e, t,
